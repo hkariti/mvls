@@ -38,3 +38,26 @@ signal = x(t);
 % play it
 sample_freq = 64000/4;
 soundsc(signal, sample_freq);
+%% Q3
+% calculate time interval
+start_index = sample_freq * 2.99;
+end_index = sample_freq * 3.01;
+number_of_samples = (3.01 - 2.99) * sample_freq;
+interval = t(start_index:end_index);
+% plot the signal twice
+figure(2);
+subplot(2, 1, 1);
+plot(interval, signal(start_index:end_index));
+title('Input signal in time interval [2.99, 3.01]');
+hold all;
+xlabel('Time [s]');
+ylabel('Amplitude');
+xlim([interval(1) inf]);
+
+subplot(2, 1, 2);
+plot(interval, signal(start_index:end_index));
+title('Input signal in time interval [2.99, 3.01]');
+hold all;
+xlabel('Time [s]');
+ylabel('Amplitude');
+xlim([interval(1) inf]);
