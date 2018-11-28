@@ -40,24 +40,35 @@ sample_freq = 64000/4;
 soundsc(signal, sample_freq);
 %% Q3
 % calculate time interval
-start_index = sample_freq * 2.99;
-end_index = sample_freq * 3.01;
-number_of_samples = (3.01 - 2.99) * sample_freq;
+start_index = 1 + sample_freq * 2.99;
+end_index = 1 + sample_freq * 3.01;
 interval = t(start_index:end_index);
-% plot the signal twice
+% plot the signal twice (title and legend will be set by later questions)
 figure(2);
 subplot(2, 1, 1);
 plot(interval, signal(start_index:end_index));
-title('Input signal in time interval [2.99, 3.01]');
-hold all;
 xlabel('Time [s]');
 ylabel('Amplitude');
-xlim([interval(1) inf]);
+xlim([interval(1) interval(end)]);
+hold all;
 
 subplot(2, 1, 2);
 plot(interval, signal(start_index:end_index));
-title('Input signal in time interval [2.99, 3.01]');
-hold all;
 xlabel('Time [s]');
 ylabel('Amplitude');
-xlim([interval(1) inf]);
+xlim([interval(1) interval(end)]);
+hold all;
+%% Q4
+% downsample signal
+downsampled_frequency = 2000;
+downsample_factor = sample_freq/downsampled_frequency;
+downsampled_signal = downsample(signal, downsample_factor);
+% calculate time interval
+start_index = 1 + 2.99 * downsampled_frequency;
+end_index = 1 + 3.01 * downsampled_frequency;
+downsampled_interval = downsample(interval, downsample_factor);
+% plot
+subplot(2, 1, 1);
+stem(downsampled_interval, downsampled_signal(start_index:end_index));
+title("Continunous signal and 2Khz-sampled signal in times [2.99,3.01]s");
+legend('Continuous [16KHz]', 'Sampled (2KHz)');
