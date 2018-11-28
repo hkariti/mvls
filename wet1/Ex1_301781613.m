@@ -36,12 +36,12 @@ x = @(t) x_w(w1, t).*(t >= 0 & t < 1) ...
 t = linspace(0, 4, 64000);
 signal = x(t);
 % play it
-sample_freq = 64000/4;
-soundsc(signal, sample_freq);
+sample_frequency_continuous = 64000/4;
+soundsc(signal, sample_frequency_continuous);
 %% Q3
 % calculate time interval
-start_index = 1 + sample_freq * 2.99;
-end_index = 1 + sample_freq * 3.01;
+start_index = 1 + sample_frequency_continuous * 2.99;
+end_index = 1 + sample_frequency_continuous * 3.01;
 interval = t(start_index:end_index);
 % plot the signal twice (title and legend will be set by later questions)
 figure(2);
@@ -60,15 +60,27 @@ xlim([interval(1) interval(end)]);
 hold all;
 %% Q4
 % downsample signal
-downsampled_frequency = 2000;
-downsample_factor = sample_freq/downsampled_frequency;
-downsampled_signal = downsample(signal, downsample_factor);
+sample_frequency = 2000;
+downsample_factor = sample_frequency_continuous/sample_frequency;
+sampled_signal = downsample(signal, downsample_factor);
 % calculate time interval
-start_index = 1 + 2.99 * downsampled_frequency;
-end_index = 1 + 3.01 * downsampled_frequency;
-downsampled_interval = downsample(interval, downsample_factor);
+start_index = 1 + 2.99 * sample_frequency;
+end_index = 1 + 3.01 * sample_frequency;
+sampled_interval = downsample(interval, downsample_factor);
 % plot
 subplot(2, 1, 1);
-stem(downsampled_interval, downsampled_signal(start_index:end_index));
+stem(sampled_interval, sampled_signal(start_index:end_index));
 title("Continunous signal and 2Khz-sampled signal in times [2.99,3.01]s");
 legend('Continuous [16KHz]', 'Sampled (2KHz)');
+%% Q5
+% Calculate fft on sampled signal
+signal_fft = fftshift(fft(sampled_signal));
+% plot it
+num_of_samples = length(sampled_signal);
+frequencies = linspace(-sample_frequency/2, sample_frequency/2, num_of_samples);
+figure(1);
+subplot(3, 1, 2);
+plot(frequencies, abs(signal_fft));
+title('FFT of 2KHz sampled signal');
+xlabel('Frequencies [Hz]');
+ylabel('Magnitude');
