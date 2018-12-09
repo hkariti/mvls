@@ -48,7 +48,7 @@ interval = t(start_index:end_index);
 figure(2);
 subplot(2, 1, 1);
 plot(interval, signal(start_index:end_index));
-xlabel('Time [s]');
+xlabel('Time [sec]');
 ylabel('Amp');
 xlim([interval(1) interval(end)]);
 hold all;
@@ -138,17 +138,17 @@ x2_FFT = fftshift( x11 );
 figure(1);
 subplot(3,1,3);
 plot(w2_FFT,abs(x2_FFT));
-title(['F_s = ',num2str(Fs2), 'Hz']);
-xlabel('f[Hz]');
-ylabel('|DFT(X)|');
+title('FFT of 800Hz sampled signal');
+xlabel('Frequencies [Hz]');
+ylabel('Magnitude');
 hold all;
 
 
 figure(2);
 subplot(2,1,2);
 stem(dt_DS2,dx_DS2)
-title(['F_s = ',num2str(Fs2), 'Hz']);
-xlabel('Time[sec]');
+title(['Original signal v.s. Reconstructions, Fs = ', num2str(Fs2), '[Hz]']);
+xlabel('Time [sec]');
 ylabel('Amp');
 hold all;
 
