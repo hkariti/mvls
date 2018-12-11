@@ -21,3 +21,10 @@ subplot(4, 1, 1);
 plot(f_axis, mag2db(abs(positive_fft_x)));
 xlabel('Frequency [Hz]');
 ylabel('Magnitude [dB]');
+%% Q3
+function fft_matrix = fft_windows(X, N)
+    length_remainder = mod(length(X), N);
+    padded_X = padarray(X, [0, length_remainder ], 'post');
+    windows_mat = reshape(padded_X, length(padded_X)/N, N);
+    fft_matrix = fft(windows_mat);
+end
